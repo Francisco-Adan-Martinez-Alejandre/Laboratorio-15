@@ -1,0 +1,44 @@
+{
+    "estudiantes": [
+        {
+            "nombre": "Francisco Martinez Alejandre",
+            "matricula": "18760460",
+            "carrera": "Ing. Sistemas Computacionales",
+            "semestre": "8vo",
+            "telefono": "6461597883",
+            "correo": "al18760460@ite.edu.mx"
+        },
+        {
+            "nombre": "Andrea Martinez Martinez",
+            "matricula": "18760600",
+            "carrera": "Ing. Gestión Empresarial",
+            "semestre": "8vo",
+            "telefono": "6464568952",
+            "correo": "al18760600@ite.edu.mx"
+        },
+        {
+            "nombre": "Veronica Salazar Gónzalez",
+            "matricula": "18760650",
+            "carrera": "Ing. Sistemas Computacionales",
+            "semestre": "8vo",
+            "telefono": "6464567585",
+            "correo": "al18760650@ite.edu.mx"
+        },
+        {
+            "nombre": "Jose Contreras Gónzalez",
+            "matricula": "18760500",
+            "carrera": "Ing. Gestión Empresarial",
+            "semestre": "8vo",
+            "telefono": "6469635362",
+            "correo": "al18760500@ite.edu.mx"
+        },
+        {
+            "nombre": "Abraham Martinez Gónzalez",
+            "matricula": "18760550",
+            "carrera": "Ing. Industrial",
+            "semestre": "8vo",
+            "telefono": "6467894652",
+            "correo": "al18760550@ite.edu.mx"
+        }
+    ]
+}
