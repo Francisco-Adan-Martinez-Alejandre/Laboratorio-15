@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lab15/pages/userinfo.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List _estudiantes = [];
+  final List _estudiantes = [];
 
   @override
   void initState() {
@@ -21,11 +22,20 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance!.addPostFrameCallback((_) => leerJson(context));
   }
 
+  Future<String> getJsonFromFirebaseRestAPI() async {
+    String url =
+        "https://laboratorio-15-default-rtdb.firebaseio.com/estudiantes.json";
+    http.Response response = await http.get(Uri.parse(url));
+    return response.body;
+  }
+
   Future<void> leerJson(BuildContext context) async {
-    final String lectura = await rootBundle.loadString('data/informacion.json');
-    final decodificacion = await json.decode(lectura);
+    String jsonString = await getJsonFromFirebaseRestAPI();
+    final jsonResponse = json.decode(jsonString);
     setState(() {
-      _estudiantes = decodificacion["estudiantes"];
+      for (Map<String, dynamic> i in jsonResponse) {
+        _estudiantes.add(SalesData.fromJson(i));
+      }
     });
   }
 
@@ -97,5 +107,28 @@ class _HomePageState extends State<HomePage> {
                     )),
               ],
             ));
+  }
+}
+
+class SalesData {
+  SalesData(this.nombre, this.matricula, this.carrera, this.semestre,
+      this.telefono, this.correo);
+
+  final String nombre;
+  final String matricula;
+  final String carrera;
+  final String semestre;
+  final String telefono;
+  final String correo;
+
+  factory SalesData.fromJson(Map<String, dynamic> parsedJson) {
+    return SalesData(
+      parsedJson['nombre'].toString(),
+      parsedJson['matricula'].toString(),
+      parsedJson['carrera'].toString(),
+      parsedJson['semestre'].toString(),
+      parsedJson['telefono'].toString(),
+      parsedJson['correo'].toString(),
+    );
   }
 }
