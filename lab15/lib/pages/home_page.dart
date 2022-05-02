@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:lab15/pages/userinfo.dart';
 import 'package:http/http.dart' as http;
 
@@ -34,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     final jsonResponse = json.decode(jsonString);
     setState(() {
       for (Map<String, dynamic> i in jsonResponse) {
-        _estudiantes.add(SalesData.fromJson(i));
+        _estudiantes.add(Estudiante.fromJson(i));
       }
     });
   }
@@ -59,21 +58,21 @@ class _HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => Userinfo(
-                            nombre: _estudiantes[index]["nombre"],
-                            matricula: _estudiantes[index]["matricula"],
-                            carrera: _estudiantes[index]["carrera"],
-                            semestre: _estudiantes[index]["semestre"],
-                            telefono: _estudiantes[index]["telefono"],
-                            correo: _estudiantes[index]["correo"])));
+                            nombre: _estudiantes[index].nombre,
+                            matricula: _estudiantes[index].matricula,
+                            carrera: _estudiantes[index].carrera,
+                            semestre: _estudiantes[index].semestre,
+                            telefono: _estudiantes[index].telefono,
+                            correo: _estudiantes[index].correo)));
               },
               onLongPress: () {
                 _borrarPersona(context, _estudiantes[index]);
               },
-              title: Text(_estudiantes[index]["nombre"]),
-              subtitle: Text(_estudiantes[index]["matricula"]),
+              title: Text(_estudiantes[index].nombre),
+              subtitle: Text(_estudiantes[index].matricula),
               leading: CircleAvatar(
                 backgroundColor: const Color.fromARGB(204, 156, 25, 156),
-                child: Text(_estudiantes[index]["nombre"].substring(0, 1)),
+                child: Text(_estudiantes[index].nombre.substring(0, 1)),
               ),
               trailing: const Icon(Icons.arrow_forward_ios_rounded),
             );
@@ -86,9 +85,8 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (_) => AlertDialog(
               title: const Text("Eliminar contacto"),
-              content: Text("¿Está seguro de querer eliminar a " +
-                  persona["nombre"] +
-                  " ?"),
+              content: Text(
+                  "¿Está seguro de querer eliminar a " + persona.nombre + " ?"),
               actions: [
                 ElevatedButton(
                     onPressed: () {
@@ -110,8 +108,8 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class SalesData {
-  SalesData(this.nombre, this.matricula, this.carrera, this.semestre,
+class Estudiante {
+  Estudiante(this.nombre, this.matricula, this.carrera, this.semestre,
       this.telefono, this.correo);
 
   final String nombre;
@@ -121,8 +119,8 @@ class SalesData {
   final String telefono;
   final String correo;
 
-  factory SalesData.fromJson(Map<String, dynamic> parsedJson) {
-    return SalesData(
+  factory Estudiante.fromJson(Map<String, dynamic> parsedJson) {
+    return Estudiante(
       parsedJson['nombre'].toString(),
       parsedJson['matricula'].toString(),
       parsedJson['carrera'].toString(),
